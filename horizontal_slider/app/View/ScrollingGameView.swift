@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
+final class ScrollingGameView: UIScrollView {
     private let level: Game
     private let backgroundView: GameBackgroundView
     private let levelGenerator: GameLevelGenerator
@@ -34,8 +34,6 @@ final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
         
         self.contentSize = geometry.bounds
         
-        self.delegate = self
-        
         self.backgroundColor = .black
         
         self.setupHierarchy()
@@ -55,9 +53,5 @@ final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
         self.gameViews = levelGenerator.views()
         self.gameViews.forEach(addSubview(_:))
         self.gameViews.forEach { $0.animate() }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
     }
 }
