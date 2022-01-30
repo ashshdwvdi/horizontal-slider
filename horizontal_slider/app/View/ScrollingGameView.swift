@@ -11,6 +11,7 @@ import UIKit
 final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
     private let level: Game
     private let backgroundView: GameBackgroundView
+    private let levelGenerator: GameLevelGenerator
     
     init(_ level: Game = .me) {
         self.level = level
@@ -19,8 +20,14 @@ final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
         
         self.backgroundView = GameBackgroundView(
             frame: .init(x: -50, y: 0, width: geometry.bounds.width + 100, height: geometry.bounds.height),
-            waveCount: level.levels.count
+            waveCount: level.levels.count + 1
         )
+        
+        self.levelGenerator = .init(config: .init(levels: level.levels,
+                                                  bounds: geometry.bounds,
+                                                  action: { level in
+            print("🎬 : \(level.title)")
+        }))
         
         super.init(frame: .zero)
         
@@ -43,6 +50,7 @@ final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
     
     private func setupHierarchy() {
         addSubview(backgroundView)
+        levelGenerator.views().forEach(addSubview(_:))
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
