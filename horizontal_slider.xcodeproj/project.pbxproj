@@ -12,10 +12,11 @@
 		BEB0DF8D27A6455D00544A8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEB0DF8C27A6455D00544A8D /* Assets.xcassets */; };
 		BEB0DF9027A6455D00544A8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB0DF8E27A6455D00544A8D /* LaunchScreen.storyboard */; };
 		BEB0DF9927A645CD00544A8D /* GameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF9827A645CD00544A8D /* GameMap.swift */; };
-		BEB0DF9B27A646E800544A8D /* GameLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF9A27A646E800544A8D /* GameLevel.swift */; };
+		BEB0DF9B27A646E800544A8D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF9A27A646E800544A8D /* Game.swift */; };
 		BEB0DF9D27A651D400544A8D /* MyGameLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */; };
 		BEB0DFA127A6535000544A8D /* ScrollingGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA027A6535000544A8D /* ScrollingGameView.swift */; };
 		BEB0DFA327A654EE00544A8D /* GameGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA227A654EE00544A8D /* GameGeometry.swift */; };
+		BEB0DFA527A6621700544A8D /* GameBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA427A6621700544A8D /* GameBackgroundView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +27,11 @@
 		BEB0DF8F27A6455D00544A8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEB0DF9127A6455D00544A8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEB0DF9827A645CD00544A8D /* GameMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMap.swift; sourceTree = "<group>"; };
-		BEB0DF9A27A646E800544A8D /* GameLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLevel.swift; sourceTree = "<group>"; };
+		BEB0DF9A27A646E800544A8D /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGameLevels.swift; sourceTree = "<group>"; };
 		BEB0DFA027A6535000544A8D /* ScrollingGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingGameView.swift; sourceTree = "<group>"; };
 		BEB0DFA227A654EE00544A8D /* GameGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGeometry.swift; sourceTree = "<group>"; };
+		BEB0DFA427A6621700544A8D /* GameBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBackgroundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 			children = (
 				BEB0DF9827A645CD00544A8D /* GameMap.swift */,
 				BEB0DFA027A6535000544A8D /* ScrollingGameView.swift */,
+				BEB0DFA427A6621700544A8D /* GameBackgroundView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -93,7 +96,7 @@
 		BEB0DF9F27A6520B00544A8D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				BEB0DF9A27A646E800544A8D /* GameLevel.swift */,
+				BEB0DF9A27A646E800544A8D /* Game.swift */,
 				BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */,
 				BEB0DFA227A654EE00544A8D /* GameGeometry.swift */,
 			);
@@ -170,7 +173,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEB0DF9B27A646E800544A8D /* GameLevel.swift in Sources */,
+				BEB0DFA527A6621700544A8D /* GameBackgroundView.swift in Sources */,
+				BEB0DF9B27A646E800544A8D /* Game.swift in Sources */,
 				BEB0DFA327A654EE00544A8D /* GameGeometry.swift in Sources */,
 				BEB0DF8427A6455C00544A8D /* AppDelegate.swift in Sources */,
 				BEB0DF9927A645CD00544A8D /* GameMap.swift in Sources */,

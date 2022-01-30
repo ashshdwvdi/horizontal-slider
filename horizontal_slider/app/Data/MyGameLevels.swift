@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension GameLevel {
-    static let myJourneyLevels = GameLevel(levels: [
+extension Game {
+    static let me = Game(levels: [
         .about, .skills, .oldJob, .currentJob
     ])
 }
