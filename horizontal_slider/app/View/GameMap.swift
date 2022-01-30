@@ -10,7 +10,9 @@ import UIKit
 
 final class GameMapViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private let scrollingGameView: ScrollingGameView = ScrollingGameView()
+    
+    override func loadView() {
+        self.view = scrollingGameView
     }
 }

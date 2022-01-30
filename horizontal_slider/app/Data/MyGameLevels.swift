@@ -7,10 +7,13 @@
 
 import Foundation
 
-extension LevelInfo {
+extension GameLevel {
     static let myJourneyLevels = GameLevel(levels: [
         .about, .skills, .oldJob, .currentJob
     ])
+}
+
+extension LevelInfo {
     static let about = LevelInfo(
         title: "About",
         heading: "Software Engineer - iOS",
