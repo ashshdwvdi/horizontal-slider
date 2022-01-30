@@ -15,6 +15,7 @@
 		BEB0DF9B27A646E800544A8D /* GameLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF9A27A646E800544A8D /* GameLevel.swift */; };
 		BEB0DF9D27A651D400544A8D /* MyGameLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */; };
 		BEB0DFA127A6535000544A8D /* ScrollingGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA027A6535000544A8D /* ScrollingGameView.swift */; };
+		BEB0DFA327A654EE00544A8D /* GameGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA227A654EE00544A8D /* GameGeometry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		BEB0DF9A27A646E800544A8D /* GameLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLevel.swift; sourceTree = "<group>"; };
 		BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGameLevels.swift; sourceTree = "<group>"; };
 		BEB0DFA027A6535000544A8D /* ScrollingGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingGameView.swift; sourceTree = "<group>"; };
+		BEB0DFA227A654EE00544A8D /* GameGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGeometry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			children = (
 				BEB0DF9A27A646E800544A8D /* GameLevel.swift */,
 				BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */,
+				BEB0DFA227A654EE00544A8D /* GameGeometry.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEB0DF9B27A646E800544A8D /* GameLevel.swift in Sources */,
+				BEB0DFA327A654EE00544A8D /* GameGeometry.swift in Sources */,
 				BEB0DF8427A6455C00544A8D /* AppDelegate.swift in Sources */,
 				BEB0DF9927A645CD00544A8D /* GameMap.swift in Sources */,
 				BEB0DF9D27A651D400544A8D /* MyGameLevels.swift in Sources */,
