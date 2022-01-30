@@ -12,6 +12,7 @@ final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
     private let level: Game
     private let backgroundView: GameBackgroundView
     private let levelGenerator: GameLevelGenerator
+    private var gameViews: [GameLevelView] = []
     
     init(_ level: Game = .me) {
         self.level = level
@@ -50,7 +51,10 @@ final class ScrollingGameView: UIScrollView, UIScrollViewDelegate {
     
     private func setupHierarchy() {
         addSubview(backgroundView)
-        levelGenerator.views().forEach(addSubview(_:))
+        
+        self.gameViews = levelGenerator.views()
+        self.gameViews.forEach(addSubview(_:))
+        self.gameViews.forEach { $0.animate() }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
