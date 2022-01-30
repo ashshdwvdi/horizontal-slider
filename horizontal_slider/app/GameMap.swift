@@ -1,19 +1,16 @@
 //
-//  ViewController.swift
+//  GameMap.swift
 //  horizontal_slider
 //
 //  Created by Ashish Dwivedi on 30/01/22.
 //
 
+import Foundation
 import UIKit
 
-class ViewController: UIViewController {
-
+final class GameMapViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
-
