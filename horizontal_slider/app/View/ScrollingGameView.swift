@@ -13,6 +13,17 @@ final class ScrollingGameView: UIScrollView {
     private let backgroundView: GameBackgroundView
     private let levelGenerator: GameLevelGenerator
     private var gameViews: [GameLevelView] = []
+    private let playerImageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 120, height: 120))
+        imageView.image = UIImage(named: "player")
+        return imageView
+    }()
+    
+    private var currentLevel: Int = 0
+    private var playersPathLayer: CAShapeLayer? = nil
+    private lazy var playerPathGenerator: PlayerPathGenerator = {
+        return PlayerPathGenerator(views: self.gameViews)
+    }()
     
     init(_ level: Game = .me) {
         self.level = level
@@ -53,5 +64,88 @@ final class ScrollingGameView: UIScrollView {
         self.gameViews = levelGenerator.views()
         self.gameViews.forEach(addSubview(_:))
         self.gameViews.forEach { $0.animate() }
+    }
+    
+    func addPlayer() {
+        if !playerImageView.isDescendant(of: self) {
+            playerImageView.clipsToBounds = true
+            playerImageView.contentMode = .scaleAspectFit
+            playerImageView.image = UIImage(named: "player")
+            playerImageView.isHidden = isHidden
+            playerImageView.layer.zPosition = 1
+            animatePlayerMovement(forLevelAt: currentLevel)
+            self.addSubview(playerImageView)
+        }
+    }
+    
+    private func animatePlayerMovement(forLevelAt index: Int) {
+        DispatchQueue.main.async {
+            self.playerImageView.layer.removeAllAnimations()
+            
+            if index > 0 {
+                let arrowAnimation = CAKeyframeAnimation()
+                arrowAnimation.setValue("AnimatePlayerMovement", forKeyPath: "id")
+                arrowAnimation.keyPath = "position"
+                arrowAnimation.repeatCount = 0.9
+                arrowAnimation.duration = 1.0
+                arrowAnimation.beginTime = CACurrentMediaTime()
+                arrowAnimation.calculationMode = CAAnimationCalculationMode.paced
+                self.playerImageView.transform = CGAffineTransform.init(rotationAngle: (CGFloat(90*Double.pi/180.0)))
+                arrowAnimation.rotationMode = CAAnimationRotationMode.rotateAuto
+                arrowAnimation.isRemovedOnCompletion = false
+                arrowAnimation.delegate = self
+//                arrowAnimation.path = self.composer.getPath(at: index - 1)
+                arrowAnimation.fillMode = .forwards
+                self.playerImageView.layer.add(arrowAnimation, forKey: "AnimatePlayerMovement")
+            }
+        }
+    }
+    
+    private func scrollToYPosition(_ xPosition: CGFloat) {
+        let scrollPosition = xPosition - UIScreen.main.bounds.width / CGFloat(level.levels.count)
+        
+        DispatchQueue.main.async { [weak self] in
+            UIView.animate(withDuration: 1.0, delay: 0, options: .curveLinear) {
+                self?.contentOffset = CGPoint.init(x: scrollPosition, y: 0)
+            }
+        }
+    }
+    
+    private func markPlayersPath(_ path: CGPath) {
+        self.playersPathLayer?.removeFromSuperlayer()
+        self.playersPathLayer = nil
+        
+        let playersPathLayer = CAShapeLayer()
+        playersPathLayer.fillColor = UIColor.clear.cgColor
+        playersPathLayer.strokeColor = UIColor.white.cgColor
+        playersPathLayer.lineWidth = 2
+        playersPathLayer.lineJoin = CAShapeLayerLineJoin.miter
+        playersPathLayer.lineDashPattern = [12]
+        playersPathLayer.lineCap = CAShapeLayerLineCap.round
+        playersPathLayer.path = path
+    
+        self.playersPathLayer = playersPathLayer
+        self.layer.addSublayer(playersPathLayer)
+    }
+}
+
+extension ScrollingGameView: CAAnimationDelegate {
+    
+    func animationDidStart(_ anim: CAAnimation) {
+        let key = anim.value(forKey: "id") as! String
+        
+        if key == "AnimatePlayerMovement" {
+            playerImageView.isHidden = false
+        }
+    }
+
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        let key = anim.value(forKey: "id") as! String
+        
+        if flag, key == "NewLevelAnimation" {
+            let view = gameViews[currentLevel]
+            self.animatePlayerMovement(forLevelAt: currentLevel)
+            self.scrollToYPosition(view.frame.origin.x)
+        }
     }
 }

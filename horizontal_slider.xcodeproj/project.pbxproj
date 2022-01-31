@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE75A17427A7936500C16AD4 /* PlayerPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75A17327A7936500C16AD4 /* PlayerPathGenerator.swift */; };
 		BEB0DF8427A6455C00544A8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF8327A6455C00544A8D /* AppDelegate.swift */; };
 		BEB0DF8627A6455C00544A8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DF8527A6455C00544A8D /* SceneDelegate.swift */; };
 		BEB0DF8D27A6455D00544A8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEB0DF8C27A6455D00544A8D /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE75A17327A7936500C16AD4 /* PlayerPathGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPathGenerator.swift; sourceTree = "<group>"; };
 		BEB0DF8027A6455C00544A8D /* horizontal_slider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = horizontal_slider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEB0DF8327A6455C00544A8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEB0DF8527A6455C00544A8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				BEB0DF9C27A651D400544A8D /* MyGameLevels.swift */,
 				BEB0DFA227A654EE00544A8D /* GameGeometry.swift */,
 				BEB0DFA827A6A13C00544A8D /* GameLevelGenerator.swift */,
+				BE75A17327A7936500C16AD4 /* PlayerPathGenerator.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				BEB0DFA527A6621700544A8D /* GameBackgroundView.swift in Sources */,
 				BEB0DF9B27A646E800544A8D /* Game.swift in Sources */,
 				BEB0DFA727A69EAC00544A8D /* GameLevelView.swift in Sources */,
+				BE75A17427A7936500C16AD4 /* PlayerPathGenerator.swift in Sources */,
 				BEB0DFA327A654EE00544A8D /* GameGeometry.swift in Sources */,
 				BEB0DF8427A6455C00544A8D /* AppDelegate.swift in Sources */,
 				BEB0DF9927A645CD00544A8D /* GameMap.swift in Sources */,
