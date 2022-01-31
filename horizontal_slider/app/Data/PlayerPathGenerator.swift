@@ -44,7 +44,6 @@ final class PlayerPathGenerator {
                                   end: .init(x: lastView.frame.maxX, y: lastView.frame.maxY),
                                   width: width)
         playerPaths.append(finalPath)
-        playerPaths.append(finalPath)
     }
     
     private func path(start: CGPoint, end: CGPoint, width: CGFloat?) -> CGPath {

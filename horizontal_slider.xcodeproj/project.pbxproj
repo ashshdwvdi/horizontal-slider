@@ -20,6 +20,7 @@
 		BEB0DFA527A6621700544A8D /* GameBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA427A6621700544A8D /* GameBackgroundView.swift */; };
 		BEB0DFA727A69EAC00544A8D /* GameLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA627A69EAC00544A8D /* GameLevelView.swift */; };
 		BEB0DFA927A6A13C00544A8D /* GameLevelGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB0DFA827A6A13C00544A8D /* GameLevelGenerator.swift */; };
+		BEFCB24E27A7F5340056DCA5 /* LevelDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFCB24D27A7F5340056DCA5 /* LevelDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		BEB0DFA427A6621700544A8D /* GameBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBackgroundView.swift; sourceTree = "<group>"; };
 		BEB0DFA627A69EAC00544A8D /* GameLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLevelView.swift; sourceTree = "<group>"; };
 		BEB0DFA827A6A13C00544A8D /* GameLevelGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLevelGenerator.swift; sourceTree = "<group>"; };
+		BEFCB24D27A7F5340056DCA5 /* LevelDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				BEB0DFA027A6535000544A8D /* ScrollingGameView.swift */,
 				BEB0DFA427A6621700544A8D /* GameBackgroundView.swift */,
 				BEB0DFA627A69EAC00544A8D /* GameLevelView.swift */,
+				BEFCB24D27A7F5340056DCA5 /* LevelDetailsViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				BEB0DF8427A6455C00544A8D /* AppDelegate.swift in Sources */,
 				BEB0DF9927A645CD00544A8D /* GameMap.swift in Sources */,
 				BEB0DF9D27A651D400544A8D /* MyGameLevels.swift in Sources */,
+				BEFCB24E27A7F5340056DCA5 /* LevelDetailsViewController.swift in Sources */,
 				BEB0DFA127A6535000544A8D /* ScrollingGameView.swift in Sources */,
 				BEB0DFA927A6A13C00544A8D /* GameLevelGenerator.swift in Sources */,
 				BEB0DF8627A6455C00544A8D /* SceneDelegate.swift in Sources */,

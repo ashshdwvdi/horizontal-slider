@@ -73,16 +73,19 @@ final class GameLevelView: UIView {
     }
     
     private func animateLevel() {
-        let oldPoint = self.frame.origin
-        UIView.animate(withDuration: 1.0, delay: 0.6, options: .autoreverse) {
-            self.frame = CGRect(x: self.frame.origin.x,
-                                y: self.frame.origin.y - 10,
-                                width: self.frame.size.width,
-                                height: self.frame.size.height
+        let oldPoint = cloudImageView.frame.origin
+        UIView.animate(withDuration: 1.0, delay: 0.6, options: .autoreverse) { [weak self] in
+            guard let `self` = self else { return }
+            self.cloudImageView.frame = CGRect(x: self.cloudImageView.frame.origin.x,
+                                               y: self.cloudImageView.frame.origin.y - 10,
+                                               width: self.cloudImageView.frame.size.width,
+                                               height: self.cloudImageView.frame.size.height
             )
-        } completion: { finished in
+        } completion: { [weak self] finished in
+            guard let `self` = self else { return }
+            
             if finished {
-                self.frame.origin = oldPoint
+                self.cloudImageView.frame.origin = oldPoint
                 self.animateLevel()
             }
         }

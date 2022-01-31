@@ -12,7 +12,7 @@ final class ScrollingGameView: UIScrollView {
     typealias AdvanceLevel = () -> Void
     private let level: Game
     private let backgroundView: GameBackgroundView
-    private let levelGenerator: GameLevelGenerator
+    private var levelGenerator: GameLevelGenerator? = nil
     private var gameViews: [GameLevelView] = []
     private let playerImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 120, height: 120))
@@ -28,6 +28,8 @@ final class ScrollingGameView: UIScrollView {
     
     // Use this callback from outside to tell the game when to go to next level
     private(set) var advanceLevel: AdvanceLevel = { }
+    var openLevel: ((LevelInfo) -> Void)? = nil
+    
     private let mapWidth: CGFloat
     
     init(_ level: Game = .me) {
@@ -40,12 +42,6 @@ final class ScrollingGameView: UIScrollView {
             waveCount: level.levels.count + 1
         )
         
-        self.levelGenerator = .init(config: .init(levels: level.levels,
-                                                  bounds: geometry.bounds,
-                                                  action: { level in
-            print("🎬 : \(level.title)")
-        }))
-        
         self.mapWidth = UIScreen.main.bounds.width
         
         super.init(frame: .zero)
@@ -53,6 +49,12 @@ final class ScrollingGameView: UIScrollView {
         self.contentSize = geometry.bounds
         
         self.backgroundColor = .black
+        
+        self.levelGenerator = .init(config: .init(levels: level.levels,
+                                                  bounds: geometry.bounds,
+                                                  action: { [weak self] level in
+            self?.openLevel?(level)
+        }))
         
         self.advanceLevel = self.advanceNextLevel
         
@@ -66,7 +68,7 @@ final class ScrollingGameView: UIScrollView {
     private func setup() {
         addSubview(backgroundView)
         
-        self.gameViews = levelGenerator.views()
+        self.gameViews = levelGenerator?.views() ?? []
         self.gameViews.forEach(addSubview(_:))
         self.gameViews.forEach { $0.animate() }
     }
