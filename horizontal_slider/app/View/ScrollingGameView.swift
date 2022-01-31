@@ -81,23 +81,20 @@ final class ScrollingGameView: UIScrollView {
     private func animatePlayerMovement(for level: Int) {
         DispatchQueue.main.async {
             self.playerImageView.layer.removeAllAnimations()
-            
-            if level > 0 {
-                let arrowAnimation = CAKeyframeAnimation()
-                arrowAnimation.setValue("AnimatePlayerMovement", forKeyPath: "id")
-                arrowAnimation.keyPath = "position"
-                arrowAnimation.repeatCount = 0.9
-                arrowAnimation.duration = 1.0
-                arrowAnimation.beginTime = CACurrentMediaTime()
-                arrowAnimation.calculationMode = CAAnimationCalculationMode.paced
-                self.playerImageView.transform = CGAffineTransform.init(rotationAngle: (CGFloat(90*Double.pi/180.0)))
-                arrowAnimation.rotationMode = CAAnimationRotationMode.rotateAuto
-                arrowAnimation.isRemovedOnCompletion = false
-                arrowAnimation.delegate = self
-                arrowAnimation.path = self.playerPathGenerator.safePath(to: level)
-                arrowAnimation.fillMode = .forwards
-                self.playerImageView.layer.add(arrowAnimation, forKey: "AnimatePlayerMovement")
-            }
+            let playerMovement = CAKeyframeAnimation()
+            playerMovement.setValue("AnimatePlayerMovement", forKeyPath: "id")
+            playerMovement.keyPath = "position"
+            playerMovement.duration = 1.0
+            playerMovement.repeatCount = 0.9
+            playerMovement.beginTime = CACurrentMediaTime()
+            playerMovement.calculationMode = CAAnimationCalculationMode.paced
+            self.playerImageView.transform = CGAffineTransform.init(rotationAngle: (CGFloat(Double.pi/180.0)))
+            playerMovement.rotationMode = CAAnimationRotationMode.rotateAuto
+            playerMovement.isRemovedOnCompletion = false
+            playerMovement.delegate = self
+            playerMovement.path = self.playerPathGenerator.safePath(to: level)
+            playerMovement.fillMode = .forwards
+            self.playerImageView.layer.add(playerMovement, forKey: "AnimatePlayerMovement")
         }
     }
     

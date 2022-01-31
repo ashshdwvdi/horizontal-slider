@@ -17,17 +17,35 @@ final class PlayerPathGenerator {
     
     private func generate(for gameViews: [GameLevelView]) {
         var locations: [CGPoint] = []
-        let width = gameViews[1].frame.width
+        let firstView = gameViews[0]
+        let width = firstView.frame.width
+        let height = firstView.frame.height
         
         
         gameViews.forEach { view in
-            locations.append(.init(x: view.frame.midX - 10, y: view.frame.midY + 10))
+            locations.append(.init(x: view.frame.midX, y: view.frame.midY))
         }
         
+        // start position on screen
+        let initialPath = self.path(start: .init(x: width, y: height),
+                             end: .init(x: firstView.frame.origin.x, y: firstView.frame.origin.y),
+                             width: width)
+        playerPaths.append(initialPath)
+        
+        // levels
         for i in 0..<(locations.count - 1) {
             let path = self.path(start: locations[i], end: locations[i + 1], width: width)
             playerPaths.append(path)
         }
+        
+        // end position on screen
+        let lastView = gameViews[gameViews.count - 1]
+        let finalPath = self.path(start: .init(x: lastView.frame.midX, y: lastView.frame.midY),
+                                  end: .init(x: lastView.frame.maxX, y: lastView.frame.maxY),
+                                  width: width)
+        playerPaths.append(finalPath)
+        
+        print(playerPaths)
     }
     
     private func path(start: CGPoint, end: CGPoint, width: CGFloat?) -> CGPath {
@@ -36,7 +54,7 @@ final class PlayerPathGenerator {
         playerMovements.append(CGPoint(x: end.x, y: end.y))
         
         var controlPoints : [CGPoint] = []
-        let constant = 250
+        let constant = 120
         
         for index in 0...1 {
             var xValue = 0
@@ -60,13 +78,13 @@ final class PlayerPathGenerator {
         let travelledPath: UIBezierPath = UIBezierPath.init()
         travelledPath.move(to: CGPoint(x: start.x, y: start.y))
         travelledPath.addCurve(
-            to: CGPoint(x: end.x ,y: end.y),
+            to: CGPoint(x: end.x, y: end.y),
             controlPoint1: controlPoints[0],
             controlPoint2: controlPoints[1])
         return travelledPath.cgPath
     }
     
     func safePath(to level: Int) -> CGPath? {
-        return playerPaths.reversed()[level]
+        return playerPaths[level]
     }
 }
