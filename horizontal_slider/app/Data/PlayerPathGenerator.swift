@@ -44,8 +44,6 @@ final class PlayerPathGenerator {
                                   end: .init(x: lastView.frame.maxX, y: lastView.frame.maxY),
                                   width: width)
         playerPaths.append(finalPath)
-        
-        print(playerPaths)
     }
     
     private func path(start: CGPoint, end: CGPoint, width: CGFloat?) -> CGPath {
@@ -85,6 +83,7 @@ final class PlayerPathGenerator {
     }
     
     func safePath(to level: Int) -> CGPath? {
+        guard playerPaths.indices.contains(level) else { return nil }
         return playerPaths[level]
     }
 }

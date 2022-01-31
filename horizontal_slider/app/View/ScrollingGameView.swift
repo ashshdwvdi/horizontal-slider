@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 final class ScrollingGameView: UIScrollView {
+    typealias AdvanceLevel = () -> Void
     private let level: Game
     private let backgroundView: GameBackgroundView
     private let levelGenerator: GameLevelGenerator
@@ -24,6 +25,9 @@ final class ScrollingGameView: UIScrollView {
     private lazy var playerPathGenerator: PlayerPathGenerator = {
         return PlayerPathGenerator(views: self.gameViews)
     }()
+    
+    // Use this callback from outside to tell the game when to go to next level
+    private(set) var advanceLevel: AdvanceLevel = { }
     
     init(_ level: Game = .me) {
         self.level = level
@@ -47,18 +51,16 @@ final class ScrollingGameView: UIScrollView {
         
         self.backgroundColor = .black
         
-        self.setupHierarchy()
-    }
-    
-    override func draw(_ rect: CGRect) {
+        self.advanceLevel = self.advanceNextLevel
         
+        self.setup()
     }
     
     required init?(coder: NSCoder) {
         fatalError("Lol no")
     }
     
-    private func setupHierarchy() {
+    private func setup() {
         addSubview(backgroundView)
         
         self.gameViews = levelGenerator.views()
@@ -66,16 +68,17 @@ final class ScrollingGameView: UIScrollView {
         self.gameViews.forEach { $0.animate() }
     }
     
-    func addPlayer() {
+    func addAndMovePlayer() {
         if !playerImageView.isDescendant(of: self) {
-            playerImageView.clipsToBounds = true
-            playerImageView.contentMode = .scaleAspectFit
-            playerImageView.image = UIImage(named: "player")
-            playerImageView.isHidden = isHidden
-            playerImageView.layer.zPosition = 1
-            animatePlayerMovement(for: currentLevel)
             self.addSubview(playerImageView)
         }
+        
+        playerImageView.clipsToBounds = true
+        playerImageView.contentMode = .scaleAspectFit
+        playerImageView.image = UIImage(named: "player")
+        playerImageView.isHidden = isHidden
+        playerImageView.layer.zPosition = 1
+        animatePlayerMovement(for: currentLevel)
     }
     
     private func animatePlayerMovement(for level: Int) {
@@ -98,8 +101,8 @@ final class ScrollingGameView: UIScrollView {
         }
     }
     
-    private func scrollToYPosition(_ xPosition: CGFloat) {
-        let scrollPosition = xPosition - UIScreen.main.bounds.width / CGFloat(level.levels.count)
+    private func scroll(to xPosition: CGFloat) {
+        let scrollPosition = self.frame.width / xPosition
         
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 1.0, delay: 0, options: .curveLinear) {
@@ -124,6 +127,12 @@ final class ScrollingGameView: UIScrollView {
         self.playersPathLayer = playersPathLayer
         self.layer.addSublayer(playersPathLayer)
     }
+    
+    private func advanceNextLevel() {
+        addAndMovePlayer()
+        playerPathGenerator.safePath(to: currentLevel).map(markPlayersPath(_:))
+        currentLevel += 1
+    }
 }
 
 extension ScrollingGameView: CAAnimationDelegate {
@@ -142,7 +151,7 @@ extension ScrollingGameView: CAAnimationDelegate {
         if flag, key == "NewLevelAnimation" {
             let view = gameViews[currentLevel]
             self.animatePlayerMovement(for: currentLevel)
-            self.scrollToYPosition(view.frame.origin.x)
+            self.scroll(to: view.frame.origin.x)
         }
     }
 }
