@@ -67,6 +67,6 @@ final class PlayerPathGenerator {
     }
     
     func safePath(to level: Int) -> CGPath? {
-        return playerPaths[level]
+        return playerPaths.reversed()[level]
     }
 }

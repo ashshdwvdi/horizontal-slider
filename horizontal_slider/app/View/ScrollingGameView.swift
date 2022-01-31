@@ -73,16 +73,16 @@ final class ScrollingGameView: UIScrollView {
             playerImageView.image = UIImage(named: "player")
             playerImageView.isHidden = isHidden
             playerImageView.layer.zPosition = 1
-            animatePlayerMovement(forLevelAt: currentLevel)
+            animatePlayerMovement(for: currentLevel)
             self.addSubview(playerImageView)
         }
     }
     
-    private func animatePlayerMovement(forLevelAt index: Int) {
+    private func animatePlayerMovement(for level: Int) {
         DispatchQueue.main.async {
             self.playerImageView.layer.removeAllAnimations()
             
-            if index > 0 {
+            if level > 0 {
                 let arrowAnimation = CAKeyframeAnimation()
                 arrowAnimation.setValue("AnimatePlayerMovement", forKeyPath: "id")
                 arrowAnimation.keyPath = "position"
@@ -94,7 +94,7 @@ final class ScrollingGameView: UIScrollView {
                 arrowAnimation.rotationMode = CAAnimationRotationMode.rotateAuto
                 arrowAnimation.isRemovedOnCompletion = false
                 arrowAnimation.delegate = self
-//                arrowAnimation.path = self.composer.getPath(at: index - 1)
+                arrowAnimation.path = self.playerPathGenerator.safePath(to: level)
                 arrowAnimation.fillMode = .forwards
                 self.playerImageView.layer.add(arrowAnimation, forKey: "AnimatePlayerMovement")
             }
@@ -144,7 +144,7 @@ extension ScrollingGameView: CAAnimationDelegate {
         
         if flag, key == "NewLevelAnimation" {
             let view = gameViews[currentLevel]
-            self.animatePlayerMovement(forLevelAt: currentLevel)
+            self.animatePlayerMovement(for: currentLevel)
             self.scrollToYPosition(view.frame.origin.x)
         }
     }
