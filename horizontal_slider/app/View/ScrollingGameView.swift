@@ -28,6 +28,7 @@ final class ScrollingGameView: UIScrollView {
     
     // Use this callback from outside to tell the game when to go to next level
     private(set) var advanceLevel: AdvanceLevel = { }
+    private let mapWidth: CGFloat
     
     init(_ level: Game = .me) {
         self.level = level
@@ -35,7 +36,7 @@ final class ScrollingGameView: UIScrollView {
         let geometry = GameGeometry(numberOfLevels: level.levels.count)
         
         self.backgroundView = GameBackgroundView(
-            frame: .init(x: -50, y: 0, width: geometry.bounds.width + 100, height: geometry.bounds.height),
+            frame: .init(x: -100, y: 0, width: geometry.bounds.width + 100, height: geometry.bounds.height),
             waveCount: level.levels.count + 1
         )
         
@@ -44,6 +45,8 @@ final class ScrollingGameView: UIScrollView {
                                                   action: { level in
             print("🎬 : \(level.title)")
         }))
+        
+        self.mapWidth = UIScreen.main.bounds.width
         
         super.init(frame: .zero)
         
@@ -78,35 +81,47 @@ final class ScrollingGameView: UIScrollView {
         playerImageView.image = UIImage(named: "player")
         playerImageView.isHidden = isHidden
         playerImageView.layer.zPosition = 1
-        animatePlayerMovement(for: currentLevel)
+        animatePlayerMovement()
     }
     
-    private func animatePlayerMovement(for level: Int) {
-        DispatchQueue.main.async {
+    private func animatePlayerMovement() {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
             self.playerImageView.layer.removeAllAnimations()
             let playerMovement = CAKeyframeAnimation()
             playerMovement.setValue("AnimatePlayerMovement", forKeyPath: "id")
             playerMovement.keyPath = "position"
-            playerMovement.duration = 1.0
-            playerMovement.repeatCount = 0.9
+            playerMovement.duration = 3.0
+            playerMovement.repeatCount = 1.0
             playerMovement.beginTime = CACurrentMediaTime()
             playerMovement.calculationMode = CAAnimationCalculationMode.paced
             self.playerImageView.transform = CGAffineTransform.init(rotationAngle: (CGFloat(Double.pi/180.0)))
             playerMovement.rotationMode = CAAnimationRotationMode.rotateAuto
             playerMovement.isRemovedOnCompletion = false
             playerMovement.delegate = self
-            playerMovement.path = self.playerPathGenerator.safePath(to: level)
+            playerMovement.path = self.playerPathGenerator.safePath(to: self.currentLevel - 1)
             playerMovement.fillMode = .forwards
             self.playerImageView.layer.add(playerMovement, forKey: "AnimatePlayerMovement")
         }
     }
     
-    private func scroll(to xPosition: CGFloat) {
-        let scrollPosition = self.frame.width / xPosition
-        
-        DispatchQueue.main.async { [weak self] in
-            UIView.animate(withDuration: 1.0, delay: 0, options: .curveLinear) {
-                self?.contentOffset = CGPoint.init(x: scrollPosition, y: 0)
+    private func scroll() {
+        if gameViews.indices.contains(currentLevel) {
+            let levelIndicatorFrame = gameViews[currentLevel].frame
+            let scrollPosition = levelIndicatorFrame.maxX - mapWidth - 120
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseIn) {
+                    self.contentOffset = CGPoint.init(x: scrollPosition, y: 0.0)
+                }
+            }
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseIn) {
+                    self.contentOffset = CGPoint.init(x: self.contentSize.width, y: 0.0)
+                }
             }
         }
     }
@@ -123,6 +138,7 @@ final class ScrollingGameView: UIScrollView {
         playersPathLayer.lineDashPattern = [12]
         playersPathLayer.lineCap = CAShapeLayerLineCap.round
         playersPathLayer.path = path
+        playerImageView.isUserInteractionEnabled = false
     
         self.playersPathLayer = playersPathLayer
         self.layer.addSublayer(playersPathLayer)
@@ -137,21 +153,15 @@ final class ScrollingGameView: UIScrollView {
 
 extension ScrollingGameView: CAAnimationDelegate {
     
-    func animationDidStart(_ anim: CAAnimation) {
-        let key = anim.value(forKey: "id") as! String
-        
-        if key == "AnimatePlayerMovement" {
-            playerImageView.isHidden = false
-        }
-    }
-
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         let key = anim.value(forKey: "id") as! String
         
         if flag, key == "NewLevelAnimation" {
-            let view = gameViews[currentLevel]
-            self.animatePlayerMovement(for: currentLevel)
-            self.scroll(to: view.frame.origin.x)
+            self.animatePlayerMovement()
+        }
+        
+        if key == "AnimatePlayerMovement" {
+            scroll()
         }
     }
 }

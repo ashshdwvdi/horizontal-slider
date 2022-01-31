@@ -9,7 +9,7 @@ import Foundation
 
 extension Game {
     static let me = Game(levels: [
-        .about, .skills, .oldJob, .currentJob
+        .about, .skills, .oldJob, .currentJob, .toBeContinued
     ])
 }
 
@@ -68,6 +68,17 @@ extension LevelInfo {
             "Javascript",
             "Java and JSP",
             "Git"
+        ]
+    )
+    static let toBeContinued = LevelInfo(
+        title: "To Be Continued",
+        heading: "That's all folks",
+        contents: [
+            "Bye",
+            "Bye",
+            "And",
+            "Take",
+            "Care"
         ]
     )
 }
