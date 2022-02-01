@@ -9,10 +9,8 @@ import Foundation
 import UIKit
 
 final class GameBackgroundView: UIView {
-    private let count: Int
     
-    init(frame: CGRect, waveCount: Int) {
-        self.count = waveCount
+    override init(frame: CGRect) {
         super.init(frame: frame)
         addBackgroundImage()
     }

@@ -38,9 +38,7 @@ final class ScrollingGameView: UIScrollView {
         let geometry = GameGeometry(numberOfLevels: level.levels.count)
         
         self.backgroundView = GameBackgroundView(
-            frame: .init(x: -100, y: 0, width: geometry.bounds.width + 100, height: geometry.bounds.height),
-            waveCount: level.levels.count + 1
-        )
+            frame: .init(x: -100, y: 0, width: geometry.bounds.width + 100, height: geometry.bounds.height))
         
         self.mapWidth = UIScreen.main.bounds.width
         
